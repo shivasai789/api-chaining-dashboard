@@ -179,12 +179,14 @@ const Dashboard = () => {
         Fetch Comments
       </button>
       </div>
+      <div ref={postsRef}></div>
         </>
       )}
 
       {/* Display Comments */}
       {showComments && (
         comments.length > 0 ? (
+          <>
           <div className="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto space-y-4 mt-8">
             <h2 className="font-bold text-3xl text-gray-900">Comments</h2>
             <ul className="space-y-3">
@@ -196,13 +198,13 @@ const Dashboard = () => {
               ))}
             </ul>
           </div>
+          </>
         ) : (
           <>
             <div className="flex justify-center">
               <img src="no-speak.png" alt="no comments" className="no-comments-img " />
             </div>
             <p className="text-center text-gray-600" style={{ margin: '0px !important' }}>No Comments Found!</p>
-            <div ref={postsRef}></div>
           </>
         )
       )}

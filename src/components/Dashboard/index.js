@@ -61,8 +61,8 @@ const Dashboard = () => {
 
   // Creating a post
   const createPost = async () => {
-    if (!selectedUser) {
-      handleError("Please select a user first.");
+    if (postData.title === '' || postData.body === ''){
+      handleError('The fields should not be empty!')
       return;
     }
 
@@ -74,7 +74,6 @@ const Dashboard = () => {
         userId: selectedUser.id,
       });
       setPosts([response.data, ...posts]);
-      fetchComments(response.data.id);
       showNotification("Post created successfully!", 'success');
     } catch (err) {
       handleError("Error creating post.");
@@ -136,6 +135,7 @@ const Dashboard = () => {
 
       {/* Create Post Form */}
       {selectedUser && (
+        <>
         <div className="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto space-y-4">
           <h2 className="font-bold text-3xl text-gray-900" style={{ color: '#10375C' }}>Create a Post</h2>
           <input
@@ -158,10 +158,12 @@ const Dashboard = () => {
             Create Post
           </button>
         </div>
+        </>
       )}
 
       {/* Display Posts */}
       {posts.length > 0 && (
+        <>
         <div className="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto space-y-4 mt-8 overflow-auto max-h-96 scroll-smooth">
           <h2 className="font-bold text-3xl text-gray-900" style={{ color: '#10375C' }}>Created Posts</h2>
           <ul className="space-y-3">
@@ -172,6 +174,12 @@ const Dashboard = () => {
             ))}
           </ul>
         </div>
+      <div className="text-center">
+      <button onClick={() => fetchComments(posts[0].id)} className="bg-blue-600 hover:bg-blue-700 text-white font-bold w-30 px-6 py-3 rounded-lg shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
+        Fetch Comments
+      </button>
+      </div>
+        </>
       )}
 
       {/* Display Comments */}
